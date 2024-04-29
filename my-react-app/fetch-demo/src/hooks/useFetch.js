@@ -17,4 +17,4 @@ const useFetch = (endpoint) =>{
     }, [endpoint]);
     return data;
 }
-export default useFetch
+export default useFetch//change
