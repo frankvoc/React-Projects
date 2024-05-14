@@ -5,7 +5,6 @@ import ProductDetailPage from './components/ProductDetailsPage';
 import './App.css';
 
 const App = () => {
-  //define a sample product
   const [products] = useState([
     {
       id: 1,
@@ -16,35 +15,35 @@ const App = () => {
       price: 10.99
     },
   ]);
-
-  //track pages useState
   const [currentPage, setCurrentPage] = useState('home');
-  //state to track which product is selected
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [theme, setTheme] = useState('light');
 
-  //navigation
   const navigateToPage = (page) => {
     setCurrentPage(page);
-    //clear selected product when navigating away
     setSelectedProduct(null);
   };
 
-  //function to handle to ProductDetails
   const handleProductClick = (productId) => {
     const product = products.find(product => product.id === productId);
     setSelectedProduct(product);
     setCurrentPage('productDetail');
   };
+//ric
+  const toggleTheme = (newTheme) => {
+    setTheme(newTheme);
+  };
 
   return (
-    <div>
-      {/*navigation bar */}
+    <div className={`App ${theme === 'dark' ? 'dark-mode' : theme === 'blue' ? 'blue-mode' : ''}`}>
       <nav>
         <button onClick={() => navigateToPage('home')}>Home</button>
         <button onClick={() => navigateToPage('products')}>Products</button>
+        <button onClick={() => toggleTheme('light')}>Light Mode</button>
+        <button onClick={() => toggleTheme('dark')}>Dark Mode</button>
+        <button onClick={() => toggleTheme('blue')}>Blue Mode</button>
       </nav>
       
-      {/*render different page components based on current page */}
       {currentPage === 'home' && <HomePage />}
       {currentPage === 'products' && <ProductsPage products={products} onProductClick={handleProductClick} />}
       {currentPage === 'productDetail' && <ProductDetailPage product={selectedProduct} onBackClick={() => navigateToPage('products')} />}
